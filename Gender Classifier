@@ -1,0 +1,57 @@
+import numpy as np
+from sklearn import *
+
+from sklearn.linear_model import Perceptron
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+# data - [height, weight, shoe size]
+X = [[181, 80, 44], [177, 70, 43], [160, 60, 38], [154, 54, 37],
+     [166, 65, 40], [190, 90, 47], [175, 64, 39], [177, 70, 40],
+     [159, 55, 37], [171, 75, 42], [181, 85, 43]]
+#labels for each dataset
+Y = ['male', 'female', 'female', 'female',
+     'male', 'male', 'male', 'female',
+     'male', 'female', 'male']
+
+#Decision Tree Classifier
+clf_tree = tree.DecisionTreeClassifier() #creating classifier using method
+clf_tree = clf_tree.fit(X, Y) #training using fit() and passing data n labels
+clf_tree_prediction = clf_tree.predict(X) #Try predict by giving X data
+print(clf_tree_prediction) #print the predicted values. ie here Y itself outputed since Decision Tree is 100%accurate
+acc_tree = accuracy_score(Y, clf_tree_prediction)*100 #Get accuracy score by passing expected n outputed prediction
+print('Accuracy for decision Tree :{}'.format(acc_tree)) #print acc_score
+
+#SVM Classifier
+clf_svm = svm.SVC()
+clf_svm = clf_svm.fit(X, Y)
+clf_svm_prediction = clf_svm.predict(X)
+print(clf_svm_prediction)
+acc_svm = accuracy_score(Y, clf_tree_prediction)*100
+print("Accuracy for Svm is : {}".format(acc_svm))
+
+#Perceptron Classifier
+clf_perceptron = Perceptron()
+clf_perceptron = clf_perceptron.fit(X, Y)
+clf_perceptron_prediction = clf_perceptron.predict(X)
+print(clf_perceptron_prediction)
+acc_perc = accuracy_score(Y, clf_perceptron_prediction)*100
+print("Accuracy for Perceptron is : {}".format(acc_perc))
+
+#KNeighbors Classifier/KNN
+clf_Knn = KNeighborsClassifier()
+clf_Knn = clf_Knn.fit(X, Y)
+clf_Knn_prediction = clf_Knn.predict(X)
+print(clf_Knn_prediction)
+acc_knn = accuracy_score(Y, clf_Knn_prediction)
+print("Accuracy for KNN is : {}".format(acc_knn))
+
+#To print the best classifier based on the accuracy score ie acc_score of tree,svm, perceptron n knn
+# index = np.argmax([acc_tree, acc_svm, acc_perc, acc_knn]) #np of numpy and call argmax() and assign it to index
+# classifiers = {0: 'tree', 1: 'svm', 2: 'perceptron', 3: 'KNN'} # create dictionary assigning 0 to tree n so on
+# print("The Best Classifier is {} ".format(classifiers[index])) #printing best classifier as dict[index]
+
+# OR to print best classifier using max() from a dictionary
+acc_scores_dict = {'tree': acc_tree, 'svm': acc_svm, 'Perceptron': acc_perc, 'KNN':acc_knn}
+maxscore = max(acc_scores_dict, key=acc_scores_dict.get)
+print("The best Classifier is {}".format(maxscore))
