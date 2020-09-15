@@ -1,0 +1,28 @@
+from textblob import TextBlob
+import tweepy
+
+#Consumer key and secret from twitter app url
+consumer_key = 'KSD7i7QBI4PAp6yNyyYoLYFua'
+consumer_secret = 'YkbnjSxo0Nz5eCpAiwv5lrwNmVCoQ47fKxm1sTeD99Gsdo1db7'
+
+#Access token and access token secret
+access_token = '1305543821275672577-hha5nHOb9kH7Gm6ruiUoGIGqTNH1RQ'
+access_token_secret = 'XbeH1HWHUcwQREVCAsIie1aMzuJiurt8q5QbH2fzoAYRF'
+
+#Calling OAuthHandler to handle authorisation and put it to auth by passing customer key and customer secret
+auth = tweepy.OAuthHandler(consumer_key,consumer_secret)
+#set access token using access token and access token secret
+auth.set_access_token(access_token, access_token_secret)
+
+#Getting api by passing the auth
+api = tweepy.API(auth)
+
+#searching the api by a 'keyword ie Python'
+public_tweets = api.search("Good")
+#print(public_tweets.text)
+
+#looping in the public_tweets
+for tweet in public_tweets:
+    print(tweet.text) #print text of tweet
+    analysis = TextBlob(tweet.text) #Analyse text of tweet using TextBlob
+    print(analysis.sentiment) #printing sentiment of analysis. This outputs Sentiment(polarity= 0.2(ie +ve), subjectivity=0.52(ie % of people who tweeted related to this)
